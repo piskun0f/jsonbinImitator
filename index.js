@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const fs = require('fs')
+const path = require('node:path');
 require('dotenv').config()
 
 const FILE_NAME = "data.json";
@@ -9,6 +10,11 @@ const PORT = process.env.PORT
 
 function saveData() {
   fs.writeFileSync(FILE_NAME, JSON.stringify(data), { encodin: 'utf-8' })
+}
+
+function backupData() {
+  fs.writeFileSync(path.join("backups", FILE_NAME + Date.now().toString()), JSON.stringify(data), { encodin: 'utf-8' })
+  console.log("Backed done")
 }
 
 function readData() {
@@ -53,6 +59,8 @@ app.put('/', (req, res) => {
   saveData();
   res.send(data);
 });
+
+setInterval(backupData, 60 * 60_000)
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`)
