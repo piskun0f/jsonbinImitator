@@ -1,8 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const fs = require('fs')
+require('dotenv').config()
 
-const FILE_NAME = "data";
+const FILE_NAME = "data.json";
 const app = express()
 const PORT = 3000
 
@@ -20,7 +21,7 @@ let data = {};
 readData();
 
 const AUTH_HEADER = "X-Master-Key".toLowerCase();
-const API_TOKEN = "$2b$10$UghmBJDa./wqWUTjc.B96e9Q1w7mMRChJAMCSnCFjQNwcVNyDq5QS";
+const API_TOKEN = process.env.API_TOKEN;
 
 app.use((req, res, next) => {
   if (req.headers[AUTH_HEADER] === API_TOKEN) {
