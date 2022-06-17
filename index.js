@@ -24,6 +24,10 @@ const AUTH_HEADER = "X-Master-Key";
 const API_TOKEN = process.env.API_TOKEN;
 
 app.use((req, res, next) => {
+  console.log(`Request with body: ${req.body} headers: ${req.headers}`)
+})
+
+app.use((req, res, next) => {
   if (req.headers[AUTH_HEADER] === API_TOKEN || req.headers[AUTH_HEADER.toLowerCase()] === API_TOKEN) {
     next();
   } else {
