@@ -24,7 +24,7 @@ const AUTH_HEADER = "X-Master-Key";
 const API_TOKEN = process.env.API_TOKEN;
 
 app.use((req, res, next) => {
-  console.log(`Request with body: ${req.body} headers: ${req.headers}`)
+  console.log(`Request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
 })
 
 app.use((req, res, next) => {
