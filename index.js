@@ -24,10 +24,6 @@ const AUTH_HEADER = "X-Master-Key";
 const API_TOKEN = process.env.API_TOKEN;
 
 app.use((req, res, next) => {
-  console.log(`Request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
-})
-
-app.use((req, res, next) => {
   if (req.headers[AUTH_HEADER] === API_TOKEN || req.headers[AUTH_HEADER.toLowerCase()] === API_TOKEN) {
     next();
   } else {
@@ -40,16 +36,19 @@ app.use((req, res, next) => {
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
+  console.log("GET request")
   res.send(data);
 })
 
 app.post('/', (req, res) => {
+  console.log(`POST request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
   data = req.body;
   saveData();
   res.send(data);
 });
 
 app.put('/', (req, res) => {
+  console.log(`PUT request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
   data = req.body;
   saveData();
   res.send(data);
