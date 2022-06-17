@@ -45,6 +45,12 @@ app.post('/', (req, res) => {
   res.send(data);
 });
 
+app.put('/', (req, res) => {
+  data = req.body;
+  saveData();
+  res.send(data);
+});
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`)
 })
