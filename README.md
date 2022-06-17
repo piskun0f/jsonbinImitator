@@ -6,5 +6,5 @@
 git clone https://github.com/piskun0f/jsonbinImitator.git
 cd jsonbinImitator
 npm i
-node index.js
+npm start
 ```
