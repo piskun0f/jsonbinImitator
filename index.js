@@ -5,7 +5,7 @@ require('dotenv').config()
 
 const FILE_NAME = "data.json";
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT
 
 function saveData() {
   fs.writeFileSync(FILE_NAME, JSON.stringify(data), { encodin: 'utf-8' })
