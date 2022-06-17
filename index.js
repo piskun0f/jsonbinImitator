@@ -23,16 +23,6 @@ readData();
 const AUTH_HEADER = "X-Master-Key";
 const API_TOKEN = process.env.API_TOKEN;
 
-app.use((req, res, next) => {
-  if (req.headers[AUTH_HEADER] === API_TOKEN || req.headers[AUTH_HEADER.toLowerCase()] === API_TOKEN) {
-    next();
-  } else {
-    const err = new Error('Fobbiden');
-    err.status = 403;
-    next(err);
-  }
-});
-
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
@@ -42,6 +32,11 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   console.log(`POST request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
+  if (req.headers[AUTH_HEADER.toLowerCase()] !== API_TOKEN) {
+    const err = new Error('Fobbiden');
+    err.status = 403;
+    res.send(err);
+  }
   data = req.body;
   saveData();
   res.send(data);
@@ -49,6 +44,11 @@ app.post('/', (req, res) => {
 
 app.put('/', (req, res) => {
   console.log(`PUT request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
+  if (req.headers[AUTH_HEADER.toLowerCase()] !== API_TOKEN) {
+    const err = new Error('Fobbiden');
+    err.status = 403;
+    res.send(err);
+  }
   data = req.body;
   saveData();
   res.send(data);
