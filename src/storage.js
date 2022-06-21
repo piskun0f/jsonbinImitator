@@ -24,8 +24,12 @@ module.exports = class Storage {
   }
 
   backupData() {
-    fs.writeFileSync(path.join("backups", FILE_NAME + Date.now().toString()) + FILE_EXTENSION, JSON.stringify(this._data), { encodin: "utf-8" })
-    logger.info("Backup done")
+    if (this._data) {
+      fs.writeFileSync(path.join("backups", FILE_NAME + Date.now().toString()) + FILE_EXTENSION, JSON.stringify(this._data), { encodin: "utf-8" })
+      logger.info("Backup done")
+      return;
+    }
+    logger.warning("Can't backup. Data is empty")
   }
 
   getData() {
