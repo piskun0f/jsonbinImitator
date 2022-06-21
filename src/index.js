@@ -36,7 +36,9 @@ app.put("/", (req, res) => {
 });
 
 storage.backupData()
-setInterval(storage.backupData, 60 * 60000)
+setInterval(() => {
+  storage.backupData()
+}, 60 * 60000)
 
 app.listen(PORT, () => {
   logger.info(`App listening on port ${PORT}`)
