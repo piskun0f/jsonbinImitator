@@ -1,8 +1,8 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-require('dotenv').config()
-const logger = require('./logger')
-const Storage = require('./storage')
+const express = require("express")
+const bodyParser = require("body-parser")
+require("dotenv").config()
+const logger = require("./logger")
+const Storage = require("./storage")
 
 const storage = new Storage()
 
@@ -14,16 +14,16 @@ const API_TOKEN = process.env.API_TOKEN;
 
 app.use(bodyParser.json())
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   logger.info("GET request")
   res.send(storage.getData());
 })
 
-app.put('/', (req, res) => {
+app.put("/", (req, res) => {
   logger.info(`PUT request with body: ${JSON.stringify(req.body)} headers: ${JSON.stringify(req.headers)}`)
   if (req.headers[AUTH_HEADER.toLowerCase()] !== API_TOKEN) {
     logger.warn(`Fobbiden request from ip ${req.ip}`)
-    res.status(403).send('Fobbiden');
+    res.status(403).send("Fobbiden");
   }
 
   if (!JSON.stringify(req.body).includes(JSON.stringify(storage.getData()))) {
@@ -35,7 +35,8 @@ app.put('/', (req, res) => {
   }
 });
 
-setInterval(storage.backupData, 60 * 60_000)
+storage.backupData()
+setInterval(storage.backupData, 60 * 60000)
 
 app.listen(PORT, () => {
   logger.info(`App listening on port ${PORT}`)
